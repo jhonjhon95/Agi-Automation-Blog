@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '20' # ou a versão que você estiver usando
 
       - name: Install dependencies
         run: npm install
@@ -29,6 +29,9 @@ jobs:
         env:
           CI: true
 
+      - name: Ensure screenshots folder exists
+        run: mkdir -p cypress/screenshots || true
+
       - name: Upload Cypress videos
         uses: actions/upload-artifact@v4
         with:
@@ -36,6 +39,7 @@ jobs:
           path: cypress/videos
 
       - name: Upload Cypress screenshots
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
